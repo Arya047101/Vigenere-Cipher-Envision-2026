@@ -21,10 +21,13 @@ Core Mathematical Logic
     {DecryptedText} = ({EncryptedText} - {Key}) mod 26
 
 Vigenère Cipher
+<img width="938" height="938" alt="image" src="https://github.com/user-attachments/assets/dea57a28-3014-4407-8a73-fb442bf00595" />
 
-Hardware Module Description
+
+## Hardware Module Description
 
 The system is split into four distinct blocks connected under a single top-level module:
+
 A. Vigenère Core (vigenere_core)
 
 This block takes one plaintext character, one key character, and a mode selection signal. To avoid underflow errors during subtraction, it temporarily extends the characters to 6 bits. It then gives the output as either the encrypted or decrypted character based on the chosen mode.
