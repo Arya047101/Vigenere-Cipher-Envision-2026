@@ -19,8 +19,9 @@ Core Mathematical Logic
     {EncryptedText} = ({PlainText} + {Key}) mod 26
     Decryption: The key value is subtracted from the encrypted text value. To prevent errors or negative numbers in hardware, 26 is added before taking the modulo:
     {DecryptedText} = ({EncryptedText} - {Key}) mod 26
+    
 
-Vigenère Cipher
+## Vigenère Cipher
 <img width="938" height="938" alt="image" src="https://github.com/user-attachments/assets/dea57a28-3014-4407-8a73-fb442bf00595" />
 
 
@@ -28,18 +29,18 @@ Vigenère Cipher
 
 The system is split into four distinct blocks connected under a single top-level module:
 
-A. Vigenère Core (vigenere_core)
+**A. Vigenère Core (vigenere_core)**
 
 This block takes one plaintext character, one key character, and a mode selection signal. To avoid underflow errors during subtraction, it temporarily extends the characters to 6 bits. It then gives the output as either the encrypted or decrypted character based on the chosen mode.
 
-B. Input Controller (input_controller)
+**B. Input Controller (input_controller)**
 
 This block takes user inputs from physical hardware switches and stores them. When the store pulse signal is high, it checks the input_mode_switch to save the incoming character as either plaintext or key data while incrementing the respective string length tracker.
 
-C. Cipher Engine (cipher_engine)
+**C. Cipher Engine (cipher_engine)**
 
 This is the main control unit that handles the sequencing loop. When the start signal is pulsed, it runs character-by-character through the stored text flat array. If the plaintext is longer than the key, it cycles the key index back to 0 so the keyword repeats over and over until processing is finished and the done flag goes high.
 
-D. Output Controller (output_controller)
+**D. Output Controller (output_controller)**
 
 This block manages how the final result is read out. When the cipher finishes (done == 1), the first encrypted/decrypted character is immediately displayed. Each subsequent press of the next button advances the index and displays the next character from the flat result array. Once the index reaches text_len (i.e. past the last character), the sentinel 5'b11111 is output to signal end-of-string, and then it is warped back.
